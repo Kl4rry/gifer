@@ -28,7 +28,7 @@
 		console.log(files[0]);
 		converting = true;
 		ffmpeg.FS("writeFile", "test.mp4", await fetchFile(files[0]));
-		await ffmpeg.run("-i", "test.mp4","-f", "gif", "out.gif");
+		await ffmpeg.run("-i", "test.mp4","-f", "gif", "out.gif", "-r", "30");
 		const data = ffmpeg.FS("readFile", "out.gif");
 		gif = URL.createObjectURL(new Blob([data.buffer], {type: "image/gif"}))
 		converting = false;
