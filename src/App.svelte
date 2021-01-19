@@ -117,32 +117,32 @@
 						<h2 class={hover}>{filename}</h2>
 					</section>
 				{:else if page == "video"}
-					<div>
+					<form on:submit|preventDefault={convertToGif}>
 						<video id="video" controls=true src={URL.createObjectURL(files[0])}></video>
 						<div id="buttons">
 							<div class="button">
 								<label for="start">Start</label>
-								<input name="start" type="text" bind:value={start}>
+								<input min="0" max={end} step="0.01" name="start" type="number" bind:value={start}>
 							</div>
 							<div class="button">
 								<label for="end">End</label>
-								<input name="end" type="text" bind:value={end}>
+								<input step="0.01" max={duration} name="end" type="number" bind:value={end}>
 							</div>
 							<div class="button">
 								<label for="width">Width</label>
-								<input name="width" type="text" bind:value={width}>
+								<input min="0" step="0.01" name="width" type="number" bind:value={width}>
 							</div>
 							<div class="button">
 								<label for="height">Height</label>
-								<input name="height" type="text" bind:value={height}>
+								<input min="0" step="0.01"  name="height" type="number" bind:value={height}>
 							</div>
 							<div class="button">
 								<label for="framerate">Framerate</label>
-								<input name="framerate" type="text" bind:value={framerate}>
+								<input min="0" step="0.01" name="framerate" type="number" bind:value={framerate}>
 							</div>
-							<button disabled={converting} on:click={convertToGif}>Convert!</button>
+							<button disabled={converting}>Convert!</button>
 						</div>
-					</div>
+					</form>
 				{:else if page == "gif"}
 					{#if !converting}
 						<img id="gif" src={gif}>
@@ -194,7 +194,7 @@
 		align-items: center;
 	}
 
-	input[type="text"] {
+	input[type="number"] {
 		width: 80px;
 		border-radius: 7px;
 		border: solid 1px #30363D;
@@ -227,6 +227,12 @@
 		padding: 0;
 		outline: none;
 		opacity: 0;
+		-moz-appearance: textfield;
+	}
+
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
 	}
 
 	h2 {
@@ -238,7 +244,7 @@
 	}
 
 	.dropzone {
-		color: green;
+		color: var(--main-color);
 	}
 
 	button {
